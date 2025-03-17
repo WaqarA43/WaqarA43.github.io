@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<head>
+<link href="https://fonts.googleapis.com/css2?family=Londrina+Shadow&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <title>amazing spiderman</title>
+  <style>
+    body {
+      text-align: center;
+      background: url("https://media.gettyimages.com/id/137274191/photo/times-square-aerial-view.jpg?s=612x612&w=0&k=20&c=GLcVs4jIfnPSTYT-Sp4q6byAmTiqNpMGfoVwg7Xkg30=");
+      background-size: cover;
+      background-position: center;
+      color: yellow;
+      font-family: helvetica;
+    }
+    p {
+      font-size: 22px;
+      font-family: "Sour Gummy", sans-serif;
+    }
+    input {
+      border: 0;
+      padding: 10px;
+      font-size: 18px;
+      font-family: "Londrina Shadow", serif;
+    }
+    input[type="submit"]
+    {
+      background: pink;
+      color: ORANGE;
+    }
+    img {
+      width: 150px;
+      border-radius: 1000px;
+      }
+  </style>
+</head>
+<body>
+  <img src="https://preview.redd.it/u55el6zy6f691.jpg?auto=webp&s=9e2f9315b69b270a8d0d52302caea1f6f061b789">
+  <p>Hi! im spiderman,I swing and fight villins in new york!</p>
+  
+  <input id="Name" placeholder="Your name">
+  <input id="Email" placeholder="Your email">
+  <input id="submit" type="submit">
+  <script type="module">	  
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+	import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyAwJmkzT-QvG9SUoRqYxWjSr1uwABcV5aU",
+      authDomain: "dash-genral.firebaseapp.com",
+      projectId: "dash-genral",
+      storageBucket: "dash-genral.firebasestorage.app",
+      messagingSenderId: "77716141351",
+      appId: "1:77716141351:web:79dac30b5e0ae262e36502",
+      measurementId: "G-856YX3GL01"
+    };
+    const app = initializeApp(firebaseConfig);
+	const db = getDatabase(app);
+const Name = document.querySelector("#Name") 
+const Email = document.querySelector("#Email")
+document.querySelector('#submit').addEventListener('click', Submit)
+	function Submit() {
+	  const timestamp = buildTimestamp()
+	  
+	  set(ref(db, timestamp), {
+		  Name: Name.value,
+	      email: Email.value,
+	  });
+
+	  Name.value = ""
+	  Email.value = ""
+	}
+	function buildTimestamp() {
+	  const now = new Date();
+	  let timestamp = now.getFullYear().toString() + "/";
+	  //const month = now.toLocaleString('default', { month: 'long' });
+
+	  let month = now.getMonth()+1   //add 1 because Javascript uses 0 for January
+	  month = month.toString()
+	  month = addLeadingZero(month)
+	  timestamp += month + "/"; 
+
+	  let date = now.getDate().toString()
+	  date = addLeadingZero(date)
+	  timestamp += date + "/";
+
+	  let hours = now.getHours().toString()
+	  hours = addLeadingZero(hours)
+	  timestamp += hours + ":";
+
+	  let minutes = now.getMinutes().toString()
+	  minutes = addLeadingZero(minutes)
+	  timestamp += minutes + ":";
+
+	  let seconds = now.getSeconds().toString()
+	  seconds = addLeadingZero(seconds)
+	  timestamp += seconds;
+  
+	  return timestamp
+	}
+	
+	function addLeadingZero(units) {
+		if (units.length < 2) {
+			units = "0" + units
+		}
+		return units
+	}
+	
+
+  </script>	
+</body>
