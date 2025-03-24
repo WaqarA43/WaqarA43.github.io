@@ -38,6 +38,8 @@
   
   <input id="Name" placeholder="Your name">
   <input id="Email" placeholder="Your email">
+  <input id="Age" placeholder="Your age">
+  <input id="Color" placeholder="Your favorite color">
   <input id="submit" type="submit">
   <script type="module">	  
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
@@ -51,22 +53,36 @@
       appId: "1:77716141351:web:79dac30b5e0ae262e36502",
       measurementId: "G-856YX3GL01"
     };
+	
+	
     const app = initializeApp(firebaseConfig);
-	const db = getDatabase(app);
+	 const db = getDatabase(app);
 const Name = document.querySelector("#Name") 
 const Email = document.querySelector("#Email")
+const Age = document.querySelector("#Age")
+const Color = document.querySelector("#Color")	 	 
 document.querySelector('#submit').addEventListener('click', Submit)
+	 
+	 
+	 
 	function Submit() {
 	  const timestamp = buildTimestamp()
 	  
 	  set(ref(db, timestamp), {
 		  Name: Name.value,
 	      email: Email.value,
+		  Age: Age.value,
+		  Color: Color.value,
 	  });
 
 	  Name.value = ""
 	  Email.value = ""
+	  Age.value = ""
+	  Color.value = ""
+	  
 	}
+	
+	
 	function buildTimestamp() {
 	  const now = new Date();
 	  let timestamp = now.getFullYear().toString() + "/";
@@ -104,5 +120,5 @@ document.querySelector('#submit').addEventListener('click', Submit)
 	}
 	
 
-  </script>	
+  </scr 8                         ipt>	
 </body>
