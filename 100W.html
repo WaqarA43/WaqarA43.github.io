@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Dekko&family=Delicious+Handrawn&family=Della+Respira&family=Londrina+Shadow&family=Parkinsans:wght@300..800&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<style>
+body {
+  font-family: "Parkinsans", sans-serif;
+  margin: 0 auto;
+  max-width: 600px;
+  background: maroon;
+}
+div {
+  height: 300px;
+  background-size: cover;
+  position: relative;
+  margin: 40px 0 0 0;
+  border-radius: 12px;
+}
+h1 {
+   font-family: "Sour Gummy", serif;
+  text-align: center;
+  font-size: 75px;
+  color: #aaaaaa;
+  margin: 60px 0 0 0;
+  color: cyan
+}
+h2 {
+  text-align: center;
+  color: #bbbbbb;
+  margin: 0px 0 70px 0;
+  color: orange;
+}
+p {
+  color: rgba(255, 0, 0,1);
+  background: black;
+  background: linear-gradient(bottom, rgba(106, 90, 205,1), rgba(106, 90, 205,.4));
+  background: -webkit-linear-gradient(bottom, rgba(106, 90, 205,1), rgba(106, 90, 205,.4));
+  background: -moz-linear-gradient(bottom, rgba(0,0,0,1), rgba(0,0,0,.4));
+  padding: 10px;
+  line-height: 28px;
+  text-align: justify;
+  position: absolute;
+  bottom: 0;
+  margin: 0;
+  height: 30px;
+  transition: height .5s;
+  -webkit-transition: height .5s;
+  -moz-transition: height .5s;
+}
+
+small {
+  opacity: 0;
+}
+
+.show-description p {
+  height: 150px;
+}
+
+.show-description small {
+  opacity: 1;
+}
+
+.first{
+  background-image: url("https://www.masslive.com/resizer/7ILu3fTGlI6KC_yaUXGFJ4qkTdI=/arc-anglerfish-arc2-prod-advancelocal/public/UDP3CWDZPVA3BK2LNI2AAST26E.jpg");
+}
+.second{
+  background-image: url("https://i0.wp.com/mamaharriskitchen.com/wp-content/uploads/2017/05/grilled-blackened-salmon-creamy-cucumber-dill-sauce-10.png?ssl=1");
+}
+.dessert{
+  background-image: url("https://i.pinimg.com/736x/15/95/ee/1595ee0e7f56b3f2b720384cc0be61cb.jpg");
+}
+.price {
+  float: right;
+}
+
+
+input {
+	font-size: 22px;
+}
+
+
+@media (max-width: 500px) {
+  h1 {
+    font-size: 50px;
+    margin-top: 20px;
+    line-height: 40px;
+  }
+  h2 {
+    font-size: 20px;
+    margin: 20px 0 30px 0;
+  }
+  div {
+    margin: 20px 12px 0 12px;
+  }
+  p {
+    font-size: 20px;
+    line-height: 24px;
+  }
+  small {
+    font-size: 16px;
+  }
+}
+
+</style>
+
+</head>
+
+<body>
+<h1>Gordon Ramsys's Restaurant</h1>
+<h2>5 Star michelin</h2>
+<div class="first">
+<input class="quantities" type="number" min="0" style="width: 50px">
+  <p>Beef wellington <span class="price">$16</span><br />
+  <small>The dish involves wrapping a seasoned beef fillet in a layer of mushroom duxelles and Parma ham, then encasing it in puff pastry. </small></p>
+</div>
+
+<div class="second">
+<input class="quantities" type="number" min="0" style="width: 50px">
+  <p>Baked Salmon with Lemon and Dill<span class="price">$42</span><br />
+  <small>Gordon Ramsay’s Baked Salmon with Lemon and Dill is a simple yet elegant dish that highlights the natural flavors of fresh ingredients. The recipe emphasizes the balance between the rich, buttery texture of salmon and the bright, zesty notes from lemon and aromatic dill..</small></p>
+</div>
+  
+<div class="dessert">
+<input class="quantities "type="number" min="0" style="width: 50px">
+  <p>Spaghetti Carbonara <span class="price">$18</span><br />
+  <small>Gordon Ramsay’s approach to Spaghetti Carbonara emphasizes simplicity and authenticity. He begins by cooking the spaghetti in salted boiling water until al dente. While the pasta cooks, he prepares a sauce using eggs and cheese, typically Pecorino Romano, which creates a creamy texture without the need for cream..</small></p>
+</div>
+
+<br><br>
+  <input id="Name" placeholder="Your name">
+  <input id="Email" placeholder="Your email">
+  <input id="submit" type="submit">
+<br><br>
+<script>
+  $('div').on('click', function() {
+      $(this).toggleClass('show-description');
+  });
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+  import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+  
+  const firebaseConfig = {
+    apiKey: "AIzaSyB5MzuRF-TxLT_PGHRvwz8gJxII1pen30k",
+    authDomain: "average-8e995.firebaseapp.com",
+    projectId: "average-8e995",
+    storageBucket: "average-8e995.firebasestorage.app",
+    messagingSenderId: "676494339633",
+    appId: "1:676494339633:web:a1f039c768eaa070a8ef10",
+    measurementId: "G-TT76RP2DW1"
+  };
+  const app = initializeApp(firebaseConfig);
+	 const db = getDatabase(app);
+const Name = document.querySelector("#Name") 
+const Email = document.querySelector("#Email")
+document.querySelector('#submit').addEventListener('click', Submit)
+const quantities = document.querySelectorAll(".quantities")
+const itemsList = ["beef wellingotn", "baked salmon with lemon dill", "spaghtti carbonara"]
+const prices = document.querySelectorAll(".price") 	 
+
+	 
+	 
+	 
+	function Submit() {
+	  const timestamp = buildTimestamp()
+	  let total = 0
+  	  let cart = { }
+  	  for  (let i=0; i<quantities.length; i=i+1) {
+  	  	if (quantities[i].value != "0" && quantities[i].value != "") {
+			  let price = prices[i].innerHTML.replace('$', '')
+			  total = total + quantities[i].value * price 	
+  	  		cart[itemsList[i]] = parseInt(quantities[i].value) 
+  	  	}
+  	  	quantities[i].value = ""
+  	  }
+	  
+	  set(ref(db, timestamp), {
+		  Name: Name.value,
+	      email: Email.value,
+		  cart: cart,
+          totalPrice: total,
+		  paid: "not yet",
+		  
+	  });
+
+	  Name.value = ""
+	  Email.value = ""
+	}
+	
+	
+	function buildTimestamp() {
+	  const now = new Date();
+	  let timestamp = now.getFullYear().toString() + "/";
+	  //const month = now.toLocaleString('default', { month: 'long' });
+
+	  let month = now.getMonth()+1   //add 1 because Javascript uses 0 for January
+	  month = month.toString()
+	  month = addLeadingZero(month)
+	  timestamp += month + "/"; 
+
+	  let date = now.getDate().toString()
+	  date = addLeadingZero(date)
+	  timestamp += date + "/";
+
+	  let hours = now.getHours().toString()
+	  hours = addLeadingZero(hours)
+	  timestamp += hours + ":";
+
+	  let minutes = now.getMinutes().toString()
+	  minutes = addLeadingZero(minutes)
+	  timestamp += minutes + ":";
+
+	  let seconds = now.getSeconds().toString()
+	  seconds = addLeadingZero(seconds)
+	  timestamp += seconds;
+  
+	  return timestamp
+	}
+	
+	function addLeadingZero(units) {
+		if (units.length < 2) {
+			units = "0" + units
+		}
+		return units
+	}
+	
+</script>
+</body>
